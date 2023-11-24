@@ -1,12 +1,14 @@
 ﻿using Csv2SqlInsert;
 using System.Data;
+using System.Text;
 using System.Text.Json;
 
 //Read input argument
 var configAsString = File.ReadAllText("./config.json");
 TablesCollection config = JsonSerializer.Deserialize<TablesCollection>(configAsString)!;
 string columnSeparator = config.ColumnSeparator;
-string outputSql = "BEGIN TRAN\r\n";
+StringBuilder outputSql = new StringBuilder();
+outputSql.Append("BEGIN TRAN\r\n");
 int tableCount = 1;
 
 var filter = new List<string>()
@@ -18,7 +20,6 @@ foreach (var tableEntity in config.Tables.Where(m => filter.Count == 0 || filter
 {
     Console.WriteLine($"{DateTime.Now} Reading {tableEntity.Name}.csv ...");
     string filePathCsv = Path.Combine(config.Folder, $"{tableEntity.Name}.csv");
-    string tableSql = "BEGIN TRAN\r\n";
 
     //confert csv to DataTable
     var content = File.ReadAllText(filePathCsv);
@@ -113,39 +114,34 @@ foreach (var tableEntity in config.Tables.Where(m => filter.Count == 0 || filter
     Console.WriteLine($"{DateTime.Now} Generating SQL INSERT for  {tableEntity.Name} ({tableCount}/{config.Tables.Count()})...");
     if (tableEntity.HasIdentity)
     {
-        outputSql += $"SET IDENTITY_INSERT [{tableEntity.Name}] ON; \r\n";
-        tableSql += $"SET IDENTITY_INSERT [{tableEntity.Name}] ON; \r\n";
+        outputSql.Append($"SET IDENTITY_INSERT [{tableEntity.Name}] ON; \r\n");
     }
     decimal nbRows = table.Rows.Count;
     decimal count = 0;
-    List<decimal> ratios = new List<decimal>() { 10, 20, 30, 40, 50, 60, 70, 80, 90 };
+    List<decimal> ratios = new List<decimal>() { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110 };
+    decimal lastProgressRatio = 10;
     foreach (DataRow dr in table.Rows)
     {
         decimal ratio = count * 100 / nbRows;
-        foreach (var r in ratios.OrderByDescending(m => m))
+        if (ratio > lastProgressRatio)
         {
-            if (ratio > 0 && ratio % r == 0)
-            {
-                Console.WriteLine($"{DateTime.Now} {r}%");
-                break;
-            }
+            Console.WriteLine($"{DateTime.Now} {(int)ratio}%");
+            lastProgressRatio = ratios.Where(m => m > lastProgressRatio).OrderBy(x => x).First();
         }
-        outputSql += DataRow2Sql(dr, tableEntity, table);
-        tableSql += DataRow2Sql(dr, tableEntity, table);
+
+        outputSql.Append(DataRow2Sql(dr, tableEntity, table));
         count++;
     }
     if (tableEntity.HasIdentity)
     {
-        outputSql += $"SET IDENTITY_INSERT [{tableEntity.Name}] OFF; \r\n";
-        tableSql += $"SET IDENTITY_INSERT [{tableEntity.Name}] OFF; \r\n";
+        outputSql.Append($"SET IDENTITY_INSERT [{tableEntity.Name}] OFF; \r\n");
     }
-    //File.WriteAllText($"debug_{tableEntity.Name}.sql", tableSql);
-    File.WriteAllText($"script.sql", outputSql);
+    File.WriteAllText($"script.sql", outputSql.ToString());
     tableCount++;
 }
-outputSql += "COMMIT\r\n";
+outputSql.Append("COMMIT\r\n");
 
-File.WriteAllText($"script.sql", outputSql);
+File.WriteAllText($"script.sql", outputSql.ToString());
 Console.WriteLine($"{DateTime.Now} Done");
 
 static string DataRow2Sql(DataRow dr, TableEntity tableEntity, DataTable table)
