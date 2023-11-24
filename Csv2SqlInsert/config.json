@@ -666,7 +666,8 @@
         },
         {
           "Name": "FileId",
-          "ColumnType": 1
+          "ColumnType": 1,
+          "Ignored": true
         },
         {
           "Name": "DepartureDate",
