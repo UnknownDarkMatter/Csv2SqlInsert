@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Csv2SqlInsert": {
+      "commandName": "Project",
+      "commandLineArgs": "d"
+    }
+  }
+}

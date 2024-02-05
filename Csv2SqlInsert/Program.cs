@@ -3,6 +3,70 @@ using System.Data;
 using System.Text;
 using System.Text.Json;
 
+if (Environment.GetCommandLineArgs().Any())
+{
+    string option = Environment.GetCommandLineArgs()[1];
+    if(option == "d")//generates config.json
+    {
+        /*
+        select t.name as table_name, c.name as column_name, c.user_type_id, c.is_identity
+        from sys.tables t
+        inner join sys.columns c on t.object_id = c.object_id 
+        */
+        var dbcolumns = File.ReadAllLines("./columns.csv");
+        bool firstLine = true;
+        bool firstTable = true;
+        string currentTable = "";
+        List<ColumnTypeEnum> ignoredTypes = new List<ColumnTypeEnum>() { ColumnTypeEnum.VARBINARY };
+        string configJson = @"{
+  ""Folder"": ""C:\\Users\\toto\\Downloads\\"",
+  ""ColumnSeparator"": "","",
+  ""Tables"": [";
+        foreach (var line in dbcolumns)
+        {
+            if (firstLine) { firstLine = false; continue; }
+
+            var cells = line.Split(',');
+            string tableName = cells[0];
+            string columnName = cells[1];
+            int dataType = Convert.ToInt32(cells[2]);
+            var dataTypeAsEnum = Utils.SqlTypeToTypeEnum(dataType);
+
+            if (currentTable != tableName)
+            {
+                currentTable = tableName;
+                if (!firstTable)
+                {
+                    configJson += @"
+      ]
+    },
+";
+                }
+                configJson += @"
+    {
+      ""Name"": """ + tableName + @""",
+      ""HasIdentity"": " + (Utils.HasIdentity(tableName, dbcolumns) ? "true" : "false" ) + @",
+      ""Columns"": [
+";
+                firstTable = false;
+            }
+            configJson += @"
+        {
+          ""Name"": """ + columnName + @""",
+          ""ColumnType"": " + ((int)dataTypeAsEnum).ToString() + @"
+          " + (ignoredTypes.Contains(dataTypeAsEnum) ? "\"Ignored\": true" : "") + @"
+        },
+";
+
+        }
+        configJson += @"
+  ]
+}";
+        File.WriteAllText("./config-generated.json", configJson);
+        return;
+    }
+}
+
 //Read input argument
 var configAsString = File.ReadAllText("./config.json");
 TablesCollection config = JsonSerializer.Deserialize<TablesCollection>(configAsString)!;

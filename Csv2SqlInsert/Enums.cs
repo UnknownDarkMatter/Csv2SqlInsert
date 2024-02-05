@@ -13,4 +13,5 @@ public enum ColumnTypeEnum
     DATETIME = 3,
     BIT = 4,
     DECIMAL = 5,
+    VARBINARY = 6
 }
