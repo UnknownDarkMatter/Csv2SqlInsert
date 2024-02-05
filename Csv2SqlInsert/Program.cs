@@ -3,10 +3,10 @@ using System.Data;
 using System.Text;
 using System.Text.Json;
 
-if (Environment.GetCommandLineArgs().Any())
+if (Environment.GetCommandLineArgs().Count() > 1)
 {
     string option = Environment.GetCommandLineArgs()[1];
-    if(option == "d")//generates config.json
+    if (option == "d")//generates config.json
     {
         /*
         select t.name as table_name, c.name as column_name, c.user_type_id, c.is_identity
@@ -16,10 +16,10 @@ if (Environment.GetCommandLineArgs().Any())
         var dbcolumns = File.ReadAllLines("./columns.csv");
         bool firstLine = true;
         bool firstTable = true;
+        bool isFirstColumn = true;
         string currentTable = "";
-        List<ColumnTypeEnum> ignoredTypes = new List<ColumnTypeEnum>() { ColumnTypeEnum.VARBINARY };
         string configJson = @"{
-  ""Folder"": ""C:\\Users\\toto\\Downloads\\"",
+  ""Folder"": ""C:\\DataSeb\\sources\\itfr-apps\\DemoTool-Back_Install\\extract_prod"",
   ""ColumnSeparator"": "","",
   ""Tables"": [";
         foreach (var line in dbcolumns)
@@ -34,31 +34,37 @@ if (Environment.GetCommandLineArgs().Any())
 
             if (currentTable != tableName)
             {
-                currentTable = tableName;
+                isFirstColumn = true;
                 if (!firstTable)
                 {
                     configJson += @"
       ]
-    },
+    }
 ";
                 }
                 configJson += @"
-    {
+    " + (!firstTable && currentTable != tableName ? "," : "") + @"{
       ""Name"": """ + tableName + @""",
-      ""HasIdentity"": " + (Utils.HasIdentity(tableName, dbcolumns) ? "true" : "false" ) + @",
+      ""HasIdentity"": " + (Utils.HasIdentity(tableName, dbcolumns) ? "true" : "false") + @",
       ""Columns"": [
 ";
+                currentTable = tableName;
                 firstTable = false;
             }
             configJson += @"
-        {
+        " + (isFirstColumn ? "" : ",") + @"{
           ""Name"": """ + columnName + @""",
           ""ColumnType"": " + ((int)dataTypeAsEnum).ToString() + @"
-          " + (ignoredTypes.Contains(dataTypeAsEnum) ? "\"Ignored\": true" : "") + @"
-        },
+        }
 ";
+            isFirstColumn = false;
 
         }
+        configJson += @"
+      ]
+    }
+";
+
         configJson += @"
   ]
 }";
@@ -85,7 +91,7 @@ foreach (var tableEntity in config.Tables.Where(m => filter.Count == 0 || filter
     Console.WriteLine($"{DateTime.Now} Reading {tableEntity.Name}.csv ...");
     string filePathCsv = Path.Combine(config.Folder, $"{tableEntity.Name}.csv");
 
-    //confert csv to DataTable
+    //convert csv to DataTable
     var content = File.ReadAllText(filePathCsv);
     var table = new DataTable();
     bool isEspacedString = false;
@@ -217,7 +223,14 @@ static string DataRow2Sql(DataRow dr, TableEntity tableEntity, DataTable table)
         var dc = table.Columns[columnConfig.Name];
         var value = dr[dc];
         if (valuesList != "") { valuesList += ", "; }
-        valuesList += Column2Sql(value, columnConfig);
+        if (columnConfig.ColumnType != ColumnTypeEnum.VARBINARY)
+        {
+            valuesList += Column2Sql(value, columnConfig);
+        }
+        else
+        {
+            valuesList += "CONVERT(varbinary,'')";
+        }
     }
     return $"INSERT INTO [{tableEntity.Name}] ({columsList}) VALUES ({valuesList}); \r\n";
 }
