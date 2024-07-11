@@ -3,80 +3,87 @@ using System.Data;
 using System.Text;
 using System.Text.Json;
 
-if (Environment.GetCommandLineArgs().Count() > 1)
+string option = Environment.GetCommandLineArgs()[1];
+string folder = Environment.GetCommandLineArgs()[2];
+folder = folder.Replace("/", "\\");
+if (folder.EndsWith("\\"))
 {
-    string option = Environment.GetCommandLineArgs()[1];
-    if (option == "d")//generates config.json
-    {
-        /*
-        select t.name as table_name, c.name as column_name, c.user_type_id, c.is_identity
-        from sys.tables t
-        inner join sys.columns c on t.object_id = c.object_id 
-        */
-        var dbcolumns = File.ReadAllLines("./columns.csv");
-        bool firstLine = true;
-        bool firstTable = true;
-        bool isFirstColumn = true;
-        string currentTable = "";
-        string configJson = @"{
-  ""Folder"": ""C:\\DataSeb\\sources\\itfr-apps\\DemoTool-Back_Install\\extract_prod"",
+    folder = folder.Substring(0, folder.Length - 1);
+}
+if (option == "d")//generates config.json
+{
+    /*
+    select t.name as table_name, c.name as column_name, c.user_type_id, c.is_identity
+    from sys.tables t
+    inner join sys.columns c on t.object_id = c.object_id 
+    */
+    var dbcolumns = File.ReadAllLines(folder + "/columns.csv");
+    bool firstLine = true;
+    bool firstTable = true;
+    bool isFirstColumn = true;
+    string currentTable = "";
+    string configJson = @"{
+  ""Folder"": """ + folder.Replace("\\","\\\\") + @""",
   ""ColumnSeparator"": "","",
   ""Tables"": [";
-        foreach (var line in dbcolumns)
+    foreach (var line in dbcolumns)
+    {
+        if (firstLine) { firstLine = false; continue; }
+
+        var cells = line.Replace("\t", ",").Replace(";", ",").Split(',');
+        string tableName = cells[0];
+        string columnName = cells[1];
+        int dataType = Convert.ToInt32(cells[2]);
+        var dataTypeAsEnum = Utils.SqlTypeToTypeEnum(dataType);
+
+        if (currentTable != tableName)
         {
-            if (firstLine) { firstLine = false; continue; }
-
-            var cells = line.Split(',');
-            string tableName = cells[0];
-            string columnName = cells[1];
-            int dataType = Convert.ToInt32(cells[2]);
-            var dataTypeAsEnum = Utils.SqlTypeToTypeEnum(dataType);
-
-            if (currentTable != tableName)
+            isFirstColumn = true;
+            if (!firstTable)
             {
-                isFirstColumn = true;
-                if (!firstTable)
-                {
-                    configJson += @"
+                configJson += @"
       ]
     }
 ";
-                }
-                configJson += @"
+            }
+            configJson += @"
     " + (!firstTable && currentTable != tableName ? "," : "") + @"{
       ""Name"": """ + tableName + @""",
       ""HasIdentity"": " + (Utils.HasIdentity(tableName, dbcolumns) ? "true" : "false") + @",
       ""Columns"": [
 ";
-                currentTable = tableName;
-                firstTable = false;
-            }
-            configJson += @"
+            currentTable = tableName;
+            firstTable = false;
+        }
+        configJson += @"
         " + (isFirstColumn ? "" : ",") + @"{
           ""Name"": """ + columnName + @""",
           ""ColumnType"": " + ((int)dataTypeAsEnum).ToString() + @"
         }
 ";
-            isFirstColumn = false;
+        isFirstColumn = false;
 
-        }
-        configJson += @"
+    }
+    configJson += @"
       ]
     }
 ";
 
-        configJson += @"
+    configJson += @"
   ]
 }";
-        File.WriteAllText("./config-generated.json", configJson);
-        return;
-    }
+    File.WriteAllText(folder + "/config.json", configJson);
+    return;
 }
 
 //Read input argument
-var configAsString = File.ReadAllText("./config.json");
+var configAsString = File.ReadAllText(folder + "/config.json");
 TablesCollection config = JsonSerializer.Deserialize<TablesCollection>(configAsString)!;
 string columnSeparator = config.ColumnSeparator;
+if(columnSeparator == "\\t" )
+{
+    columnSeparator = "\t";
+}
 StringBuilder outputSql = new StringBuilder();
 outputSql.Append("BEGIN TRAN\r\n");
 int tableCount = 1;
@@ -104,7 +111,7 @@ foreach (var tableEntity in config.Tables.Where(m => filter.Count == 0 || filter
     {
         var car1 = content[carIndex].ToString();
         var car2 = carIndex < content.Length - 1 ? content[carIndex + 1].ToString() : "";
-        if (car1 == "\"")
+        if (car1 == "\""  || car1 ==  columnSeparator)
         {
             if (isEspacedString)
             {
@@ -206,12 +213,12 @@ foreach (var tableEntity in config.Tables.Where(m => filter.Count == 0 || filter
     {
         outputSql.Append($"SET IDENTITY_INSERT [{tableEntity.Name}] OFF; \r\n");
     }
-    File.WriteAllText($"script.sql", outputSql.ToString());
+    File.WriteAllText(folder + "/script.sql", outputSql.ToString());
     tableCount++;
 }
 outputSql.Append("COMMIT\r\n");
 
-File.WriteAllText($"script.sql", outputSql.ToString());
+File.WriteAllText(folder + "/script.sql", outputSql.ToString());
 Console.WriteLine($"{DateTime.Now} Done");
 
 static string DataRow2Sql(DataRow dr, TableEntity tableEntity, DataTable table)

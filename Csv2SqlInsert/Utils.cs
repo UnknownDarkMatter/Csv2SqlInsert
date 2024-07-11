@@ -41,6 +41,10 @@ namespace Csv2SqlInsert
                     {
                         return ColumnTypeEnum.DATETIME;
                     }
+                case 61:
+                    {
+                        return ColumnTypeEnum.DATETIME;
+                    }
                 case 165:
                     {
                         return ColumnTypeEnum.VARBINARY;
