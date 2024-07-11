@@ -111,7 +111,7 @@ foreach (var tableEntity in config.Tables.Where(m => filter.Count == 0 || filter
     {
         var car1 = content[carIndex].ToString();
         var car2 = carIndex < content.Length - 1 ? content[carIndex + 1].ToString() : "";
-        if (car1 == "\""  || car1 ==  columnSeparator)
+        if (car1 == "\"")
         {
             if (isEspacedString)
             {
