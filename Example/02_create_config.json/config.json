@@ -1,0 +1,1300 @@
+{
+  "Folder": "C:\\DataSeb\\sources\\TFS_Applications\\HABILITATION_SIGNATURES_Install\\DumpDb\\02_create_config.json",
+  "ColumnSeparator": ",",
+  "Tables": [
+    {
+      "Name": "AuthLevel",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Level",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "DemandCM",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Internal",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "External",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "T",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "G",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "Division_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Agency",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Observations",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Level_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Demand_Id",
+          "ColumnType": 1
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "Costcenter",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Division_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Value",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Active",
+          "ColumnType": 4
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "Division",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Code",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Libelle",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "ActiveDivision",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "CompanyCEOCFO_Id",
+          "ColumnType": 1
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "CompanyCEOCFO",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Code",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "CEO_GID",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "CFO_GID",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Company",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "ActiveCompanyCEOCFO",
+          "ColumnType": 4
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "ExceptionCEOCFO",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Manager_GID",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "CompanyCEOCFO_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Type",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "User",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "GID",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Matricule",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Lastname",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Firstname",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Email",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "BCGAcceptance",
+          "ColumnType": 3
+        }
+
+        ,{
+          "Name": "CompanyCEOCFO_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Division_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Agency",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Department",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Costcenter",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Phone",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Status_Id",
+          "ColumnType": 1
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "Demand",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Creation",
+          "ColumnType": 3
+        }
+
+        ,{
+          "Name": "LastReminder",
+          "ColumnType": 3
+        }
+
+        ,{
+          "Name": "Comments",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "RejectReason",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Status_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Creator_GID",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "DemandStatus",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "ShortLabel",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "LongLabel",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "Validation",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Date",
+          "ColumnType": 3
+        }
+
+        ,{
+          "Name": "Comment",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "User_GID",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Forwarder_GID",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Type_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Demand_Id",
+          "ColumnType": 1
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "ValidationType",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Level",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Label",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "Signature",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Creation",
+          "ColumnType": 3
+        }
+
+        ,{
+          "Name": "T",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "G",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "Internal",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "External",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "Division_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Agency",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Comments",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Termination",
+          "ColumnType": 3
+        }
+
+        ,{
+          "Name": "Update",
+          "ColumnType": 3
+        }
+
+        ,{
+          "Name": "Status_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Level_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "DemandCreation_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "User_GID",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "Profitcenter",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Division_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Value",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Active",
+          "ColumnType": 4
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "Substitute",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Number",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Scope",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Start",
+          "ColumnType": 3
+        }
+
+        ,{
+          "Name": "End",
+          "ColumnType": 3
+        }
+
+        ,{
+          "Name": "Signature_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Demand_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "User_GID",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "SignatureStatus",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Label",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "Profil",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Division_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Active",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "User_GID",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Role_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Auto",
+          "ColumnType": 4
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "Role",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Label",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Description",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Locked",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "Weight",
+          "ColumnType": 1
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "Feature",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Label",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Description",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Order",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Category_Id",
+          "ColumnType": 1
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "Category",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Label",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "UserStatus",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "ShortLabel",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "LongLabel",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "BCG",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Label",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Url",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "ErrorMat",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Matricule",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Raison",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "HomeLink",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Label",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Url",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "ProfilParameter",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "SynchroDirx",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "RoleDirxManager",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "RoleDirxSecretary",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "VDemand_Deletion",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Creation",
+          "ColumnType": 3
+        }
+
+        ,{
+          "Name": "Status_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Creator_GID",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Signature_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Comments",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "RejectReason",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "VDemandEnCours",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Creation",
+          "ColumnType": 3
+        }
+
+        ,{
+          "Name": "Type",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Status",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "CreatorGID",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "CreatorLastname",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "CreatorFirstname",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "CreatorMatricule",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "CreatorCompany",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "CreatorDivision",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "CreatorAgency",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "ValidatorGID",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "ValidatorLastname",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "ValidatorFirstname",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "ValidatorMatricule",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "LastReminder",
+          "ColumnType": 3
+        }
+
+        ,{
+          "Name": "Status_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "DivisionCreator_Id",
+          "ColumnType": 1
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "VDemandCM_Creation",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Creation",
+          "ColumnType": 3
+        }
+
+        ,{
+          "Name": "Status_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Creator_GID",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "External",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "Internal",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "T",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "G",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "Level_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Demand_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Signatory_GID",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Comments",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "RejectReason",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Observations",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "VDemandCM_Modification",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Internal",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "External",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "T",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "G",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "Level_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Demand_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Signature_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Observations",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "VDemandesCM",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Internal",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "External",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "T",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "G",
+          "ColumnType": 4
+        }
+
+        ,{
+          "Name": "Level_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Demand_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "GID",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Observations",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "DemandCMCostcenter",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Costcenters_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Demands_Id",
+          "ColumnType": 1
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "DemandCMProfitcenter",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Profitcenters_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Demands_Id",
+          "ColumnType": 1
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "ProfitcenterSignature",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "ProfitProfilCenters_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Signatures_Id",
+          "ColumnType": 1
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "FeatureRole",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Features_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Roles_Id",
+          "ColumnType": 1
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "UserUser",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Delegates_GID",
+          "ColumnType": 2
+        }
+
+        ,{
+          "Name": "Substitutes_GID",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "CostcenterSignature",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "CostProfilCenters_Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Signatures_Id",
+          "ColumnType": 1
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "Demand_Deletion",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Signature_Id",
+          "ColumnType": 1
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "DemandCM_Creation",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Signatory_GID",
+          "ColumnType": 2
+        }
+
+      ]
+    }
+
+    ,{
+      "Name": "DemandCM_Modification",
+      "HasIdentity": false,
+      "Columns": [
+
+        {
+          "Name": "Id",
+          "ColumnType": 1
+        }
+
+        ,{
+          "Name": "Signature_Id",
+          "ColumnType": 1
+        }
+
+      ]
+    }
+
+  ]
+}
