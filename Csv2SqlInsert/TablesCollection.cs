@@ -10,5 +10,7 @@ public class TablesCollection
 {
     public string Folder { get; set; }
     public string ColumnSeparator { get; set; }
+    public string DateFormatAsString { get; set; }
+    public string DateFormatAsSqlNumber { get; set; }
     public IEnumerable<TableEntity> Tables { get; set; }
 }

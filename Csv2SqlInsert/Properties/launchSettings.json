@@ -2,7 +2,7 @@
   "profiles": {
     "Csv2SqlInsert": {
       "commandName": "Project",
-      "commandLineArgs": "u \"C:\\DataSeb\\sources\\TFS_Applications\\HABILITATION_SIGNATURES_Install\\DumpDb\\03_generate_insert\""
+      "commandLineArgs": "u \"C:\\DataSeb\\sources\\TFS_Applications\\HABILITATION_SIGNATURES_Install\\PopulateDbWithInserts\\03_generate_insert\""
     }
   }
 }

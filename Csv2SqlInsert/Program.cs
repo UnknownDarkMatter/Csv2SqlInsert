@@ -22,9 +22,15 @@ if (option == "d")//generates config.json
     bool firstTable = true;
     bool isFirstColumn = true;
     string currentTable = "";
+    //DateFormatAsString : yyyy-mm-ddThh:mi:ss.mmm
+    //DateFormatAsSqlNumber : 126
+    //DateFormatAsString : dd/MM/yyyy
+    //DateFormatAsSqlNumber : 103
     string configJson = @"{
   ""Folder"": """ + folder.Replace("\\","\\\\") + @""",
   ""ColumnSeparator"": "","",
+  ""DateFormatAsString"":""dd/MM/yyyy"",
+  ""DateFormatAsSqlNumber"":""103"",
   ""Tables"": [";
     foreach (var line in dbcolumns)
     {
@@ -206,7 +212,7 @@ foreach (var tableEntity in config.Tables.Where(m => filter.Count == 0 || filter
             lastProgressRatio = ratios.Where(m => m > lastProgressRatio).OrderBy(x => x).First();
         }
 
-        outputSql.Append(DataRow2Sql(dr, tableEntity, table));
+        outputSql.Append(DataRow2Sql(dr, tableEntity, table, config));
         count++;
     }
     if (tableEntity.HasIdentity)
@@ -221,7 +227,7 @@ outputSql.Append("COMMIT\r\n");
 File.WriteAllText(folder + "/script.sql", outputSql.ToString());
 Console.WriteLine($"{DateTime.Now} Done");
 
-static string DataRow2Sql(DataRow dr, TableEntity tableEntity, DataTable table)
+static string DataRow2Sql(DataRow dr, TableEntity tableEntity, DataTable table, TablesCollection config)
 {
     string columsList = string.Join(",", tableEntity.Columns.Where(m => !m.Ignored).Select(m => $"[{m.Name}]"));
     string valuesList = "";
@@ -232,7 +238,7 @@ static string DataRow2Sql(DataRow dr, TableEntity tableEntity, DataTable table)
         if (valuesList != "") { valuesList += ", "; }
         if (columnConfig.ColumnType != ColumnTypeEnum.VARBINARY)
         {
-            valuesList += Column2Sql(value, columnConfig);
+            valuesList += Column2Sql(value, columnConfig, config);
         }
         else
         {
@@ -242,7 +248,7 @@ static string DataRow2Sql(DataRow dr, TableEntity tableEntity, DataTable table)
     return $"INSERT INTO [{tableEntity.Name}] ({columsList}) VALUES ({valuesList}); \r\n";
 }
 
-static string Column2Sql(object value, ColumnEntity columnEntity)
+static string Column2Sql(object value, ColumnEntity columnEntity, TablesCollection config)
 {
     if ((value ?? "").ToString().Trim().ToUpper() == "NULL") { return "NULL"; }
 
@@ -263,8 +269,8 @@ static string Column2Sql(object value, ColumnEntity columnEntity)
         case ColumnTypeEnum.DATETIME:
             {
                 if ((value ?? "").ToString().Trim().ToUpper() == "") { return "NULL"; }
-                valueAsString = $"'{(value ?? "").ToString().Substring(0, "yyyy-mm-ddThh:mi:ss.mmm".Length)}'";
-                valueAsString = $"CONVERT(DATETIME, {valueAsString}, 126)";
+                valueAsString = $"'{(value ?? "").ToString().Substring(0, config.DateFormatAsString.Length)}'";
+                valueAsString = $"CONVERT(DATETIME, {valueAsString}, {config.DateFormatAsSqlNumber})";
                 break;
             }
         case ColumnTypeEnum.BIT:
